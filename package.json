@@ -27,7 +27,7 @@
     "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
   },
   "dependencies": {
-    "vuex": "^4.0.2"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
