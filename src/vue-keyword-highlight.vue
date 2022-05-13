@@ -1,5 +1,5 @@
 <template>
-  <span v-html="output"></span>
+  <span v-html="output"/>
 </template>
 
 <script lang="ts">
@@ -26,7 +26,7 @@ export default defineComponent({
     const options = computed<{ color: TColor }>(()=> getters.getOptions)
 
     const highlightWrapping = (str: string): string => {
-      const spanEl = document.createElement('span')
+      const spanEl = document.createElement('b')
       spanEl.setAttribute('style', makeStyle({ highlightColor : options.value.color}))
       spanEl.innerText = str
       return spanEl.outerHTML
@@ -40,18 +40,28 @@ export default defineComponent({
       }
     }
 
-    const output = computed(() => {
-      let text = props.text
+    const output = computed<string>(() => {
+      const text = props.text
+      let result = Array.from(text)
+      const regexp = new RegExp(`[${keywords.value.join('|')}]`, 'g')
+      const iterator = text.matchAll(regexp)
+      for(const iter of iterator) {
+        const [s,i]: [string, number] = [iter[0], iter.index!]
+        result[i] = highlightWrapping(s)
+      }
 
-      return text.replaceAll(
-        new RegExp(`[${keywords.value.join('|')}]`, 'g'),
-        'r'
-      )
-
+      return result.join('')  
     })
     return {
-      output,options
+      output,
+      options,
     }
   },
 })
 </script>
+
+<style scoped>
+::v-deep b {
+  font-weight: 400;
+}
+</style>
