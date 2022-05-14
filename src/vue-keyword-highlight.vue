@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, getCurrentInstance } from '@vue/composition-api'
-import { TColor } from '@/types'
+import { computed, defineComponent } from '@vue/composition-api'
+import { IOptions, TColor } from '@/types'
+import store from '@/store/vueKeywordHighlight'
 
 export interface IVueKeywordHighlightProps {
   text: string
@@ -20,10 +21,9 @@ export default defineComponent({
     },
   },
   setup(props: IVueKeywordHighlightProps) {
-    const { getters }: any = getCurrentInstance()?.proxy.$store
-
-    const keywords = computed<string[]>(() => getters.getSearchKeywords)
-    const options = computed<{ color: TColor }>(()=> getters.getOptions)
+    const { getSearchKeywords, getOptions  } = store()
+    const keywords = computed<string[]>(() => getSearchKeywords())
+    const options = computed<IOptions>(()=> getOptions())
 
     const highlightWrapping = (str: string): string => {
       const spanEl = document.createElement('b')

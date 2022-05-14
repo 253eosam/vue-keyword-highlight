@@ -26,7 +26,7 @@
           Test string :: 
         </th>
         <td>
-          {{ text }}
+          {{ TEXT }}
         </td>
       </tr>
 
@@ -35,7 +35,7 @@
           Highlight ::
         </th>
         <td>
-          <VueKeywordHighlight :text=text />
+          <VueKeywordHighlight :text="TEXT" />
         </td>
       </tr>
 
@@ -44,27 +44,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, getCurrentInstance, watch, computed } from '@vue/composition-api'
+import { defineComponent, ref, watch, computed } from '@vue/composition-api'
 import VueKeywordHighlight from '@/vue-keyword-highlight.vue'
+import store from '@/store/vueKeywordHighlight'
+
+const TEXT = '사랑시 고백구 행복동 123-456 7동 809호'
 
 export default defineComponent({
   components: {
     VueKeywordHighlight
   },
   setup() {
-    const { getters, dispatch }: any = getCurrentInstance()?.proxy.$store
-
+    const { setSearch, getSearchKeywords } = store()
     const input = ref('')
+
     watch(input, ()=> {
-      dispatch('putSearch', input.value)
+      setSearch(input.value)
     })
-    const text = '사랑시 고백구 행복동 123-456 7동 809호'
     
-    const keywords = computed(()=> getters.getSearchKeywords)
+    const keywords = computed(()=> getSearchKeywords())
+
     return {
       input,
       keywords,
-      text
+      TEXT
     }
   },
 })
