@@ -1,7 +1,7 @@
 import _Vue, { PluginObject } from 'vue';
 
 // Import vue component
-import '@/lib/composition-api'
+import VueCompositionAPI from '@vue/composition-api'
 import component from '@/vue-keyword-highlight.vue';
 import vueKeywordHighlight from  '@/store/vueKeywordHighlight'
 
@@ -17,7 +17,7 @@ export default /*#__PURE__*/((): InstallableComponent => {
 
   // Attach install function executed by Vue.use()
   installable.install = (Vue: typeof _Vue) => {
-    import('@/lib/composition-api')
+    Vue.use(VueCompositionAPI)
     Vue.component('VueKeywordHighlight', installable);
     Vue.prototype.$vueKeywordHighlight = vueKeywordHighlight
   };
