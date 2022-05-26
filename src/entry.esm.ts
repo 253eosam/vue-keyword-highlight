@@ -17,6 +17,7 @@ export default /*#__PURE__*/((): InstallableComponent => {
 
   // Attach install function executed by Vue.use()
   installable.install = (Vue: typeof _Vue) => {
+    import('@/lib/composition-api')
     Vue.component('VueKeywordHighlight', installable);
     Vue.prototype.$vueKeywordHighlight = vueKeywordHighlight
   };
