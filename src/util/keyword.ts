@@ -42,7 +42,7 @@ function strIncludes(str: string, x: string, isCaseSensitive: boolean) {
   return str.toUpperCase().includes(x.toUpperCase());
 }
 
-export function tokenizeSeparators(str: string, separators: string[]): string[] {
+export function tokenizeSeparators(str: string, separators: string[]): any {
   const reg = new RegExp('([\\wㄱ-ㅎㅏ-ㅣ가-힣]+(?:[^' + separators.join('') + '])?)', 'g');
-  return str.match(reg) ?? [];
+  return str.match(reg) || [];
 }

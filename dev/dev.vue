@@ -52,6 +52,15 @@
 
       <tr>
         <th>
+          Highlight (No field). ::
+        </th>
+        <td>
+          <VueKeywordHighlight :text="TEXT" />
+        </td>
+      </tr>
+
+      <tr>
+        <th>
           Highlight (field A). ::
         </th>
         <td>
