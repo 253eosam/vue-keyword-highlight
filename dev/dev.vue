@@ -28,7 +28,7 @@
           Input search keywords ::
         </th>
         <td>
-          <input class="search-input" type="text" v-model="input"/>
+          <input class="search-input" type="text" :value="input" @input="onInput"/>
         </td>
       </tr>
 
@@ -98,9 +98,6 @@ export default defineComponent({
     const input = ref<string>('')
     const field = ref<THighlightField>(null)
 
-    watch(input, ()=> {
-      setSearch(input.value)
-    })
     watch(field, ()=> {
       setHighlightField(field.value)
     })
@@ -111,7 +108,11 @@ export default defineComponent({
       input,
       field,
       keywords,
-      TEXT
+      TEXT,
+      onInput(evt : InputEvent & { target : HTMLInputElement }) {
+        input.value = evt.target!.value
+        setSearch(input.value)
+      }
     }
   },
 })
